@@ -1,0 +1,55 @@
+
+<!--This all needs to be moved to a main parent html file-->
+{# Load the tag library #} 
+{% load bootstrap3 %} 
+{# Load CSS and JavaScript #}
+{% bootstrap_css %} {% bootstrap_javascript%}
+<!--END-->
+{%include "spotLocator/nav.html"%}
+
+
+<div class="container" style="margin-bottom:100px; margin-top: 100px">
+    
+    <h1 class="my-4 text-center text-lg-left">Favorite Spots Gallery</h1>
+
+    <a href="{% url 'spotLocator:add-spot' %}" class="btn btn-primary">Add New Spot</a>
+
+
+{% for activity_type in spot_activity_type %}
+
+<div class="row">
+
+<h2>{{activity_type.1}}</h2>
+
+<a href="{% url 'spotLocator:activity' activity_type.0 %}"><p>See all {{activity_type.1}} Spots</p></a>
+
+    {% for spot in spot_list %} 
+
+        {% if spot.activity  == activity_type.0%}
+
+        <div class="col-lg-3 col-md-4 col-xs-6">
+            <a class="spot-detail" href="{% url 'spotLocator:detail' spot.id %}" class="d-block mb-4 h-100">
+            {% if spot.imageURL %}
+            <img class="img-fluid img-thumbnail" height="400px" src="{{spot.imageURL}}" alt="">
+            {%else%}
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+            {%endif%}
+            <h5 style="text-align:center">{{spot.name}}</h5>
+          </a>
+        </div>
+
+        {% endif %}
+    {% endfor %}
+</div>
+
+<hr>
+{% endfor %}
+
+
+ 
+</div>
+
+
+
+
+

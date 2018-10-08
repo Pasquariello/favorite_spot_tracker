@@ -1,0 +1,65 @@
+{# Load the tag library #} 
+{% load bootstrap3 %} 
+{# Load CSS and JavaScript #}
+{% bootstrap_css %} 
+{% bootstrap_javascript jquery=1%}
+{% load widget_tweaks %}
+
+
+
+{%include "spotLocator/nav.html"%}
+
+
+<div class="container" style="margin-bottom:100px; margin-top: 100px">
+<a href="{% url 'spotLocator:activity' activity_type %}"><p>See All {{activity_type}} Spots</p></a>
+
+<h2>{{ spot }}</h2>
+  <div class="panel panel-default">
+    <div class="panel-heading">{{spot.description}}</div>
+    <div class="panel-body">
+ 
+  <div style="display: inline-block; float:left; margin-right: 20px">
+    {% if spot.imageURL %}
+       <a href="{% url 'spotLocator:detail' spot.id %}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" height="400px" src="{{spot.imageURL}}" alt="">
+       </a>
+            {%else%}
+            <img class="img-fluid img-thumbnail" src="http://placehold.it/400x300" alt="">
+    {%endif%}       
+  </div>
+<h3>Notes:</h3>
+{% if spot.notes %}
+
+<p>{{spot.notes}}</p>
+{% else %}
+<p>No Currrent Notes</p>
+{%endif%}
+
+
+
+</div>
+    <div class="panel-footer clearfix">
+    
+      <div class="pull-right">
+          <div style="display: inline-block">
+
+<a href="{% url 'spotLocator:edit-spot' spot.id%}" class="btn btn-success">Edit</a>
+            </div>
+      <div style="display: inline-block">
+      <form action="" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Delete" class="btn btn-danger">
+</form>
+      </div>
+            
+
+    </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
